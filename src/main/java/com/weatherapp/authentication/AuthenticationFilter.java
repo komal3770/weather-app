@@ -35,8 +35,10 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 
 
 	protected boolean hasMatched(HttpServletRequest request){
+		System.out.println("permitURLsMatchers "+permitURLsMatchers.isEmpty());
 		if (permitURLsMatchers != null && !permitURLsMatchers.isEmpty()){
 			for (AntPathRequestMatcher antPathRequestMatcher: permitURLsMatchers){
+				System.out.println(request);
 				if (antPathRequestMatcher.matches(request)){
 					return true;
 				}
@@ -49,6 +51,8 @@ public class AuthenticationFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		if ( (!hasMatched(request))){
+			System.out.println(request.getUserPrincipal()==null);
+			System.out.println(SecurityContextHolder.getContext().getAuthentication()==null);
 			if(SecurityContextHolder.getContext().getAuthentication()==null){
 				response.getOutputStream().write("Unauthorized User".getBytes());
 			}

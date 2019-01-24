@@ -24,7 +24,7 @@ import com.weatherapp.authentication.AuthenticationFilter;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	private final static String permitURLS = "/,/register,/signin,/resources/**,/logout";
+	private final static String permitURLS = "/,/register,/signin,/resources/**";
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/resources/**","/","/register","/signin,/logout").permitAll()
+		.antMatchers("/resources/**","/","/register","/signin").permitAll()
 		.anyRequest().authenticated()
 		.and()
         .exceptionHandling()

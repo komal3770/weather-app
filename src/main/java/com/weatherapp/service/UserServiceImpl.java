@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 
 import com.weatherapp.entity.City;
 import com.weatherapp.entity.User;
+import com.weatherapp.entity.UserCity;
 import com.weatherapp.entity.WeatherData;
+import com.weatherapp.repository.UserCityRepository;
 import com.weatherapp.repository.UserRepository;
 
 @Service
@@ -31,6 +33,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private WeatherDataService weatherDataService;
+	
+	@Autowired
+	private UserCityRepository userCityRepository;
 	
 	@Override
 	public Optional<User> findById(Integer userId) {
@@ -79,6 +84,25 @@ public class UserServiceImpl implements UserService {
 		if(principal != null){
 			User user = userRepository.findByEmail(principal.getName());
 			return user;
+		}
+		return null;
+	}
+
+	@Override
+	public WeatherData addCityForUser(Integer userId, Integer cityId) {
+		
+		try {
+			WeatherData weather = weatherDataService.getWeatherByCityAndDate(cityId, new Date());
+			if(weather!=null){
+				UserCity userCity = new UserCity();
+				userCity.getId().setCityId(cityId);
+				userCity.getId().setUserId(userId);
+				userCityRepository.save(userCity);
+				return weather;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

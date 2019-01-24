@@ -17,4 +17,6 @@ public interface UserService {
 	WeatherData getWeatherByUserCity(User user) throws ParseException;
 	
 	User getCurrentLoggedInUser(HttpServletRequest request);
+	
+	WeatherData addCityForUser(Integer userId, Integer cityId);
 }
