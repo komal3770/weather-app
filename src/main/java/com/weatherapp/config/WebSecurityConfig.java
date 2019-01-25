@@ -24,7 +24,7 @@ import com.weatherapp.authentication.AuthenticationFilter;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	private final static String permitURLS = "/,/register,/signin,/resources/**";
+	private final static String permitURLS = "/,/register,/signin,/resources/**,/searchCity";
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -38,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/resources/**","/","/register","/signin").permitAll()
+		.antMatchers("/resources/**","/","/register","/signin",
+				"/swagger-resources/**","/swagger-ui.html","/searchCity").permitAll()
 		.anyRequest().authenticated()
 		.and()
         .exceptionHandling()

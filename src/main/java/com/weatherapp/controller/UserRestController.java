@@ -39,14 +39,9 @@ public class UserRestController {
 		return userService.getWeatherByUserCity(user);
 	}
 	
-	@RequestMapping(value="/getWeatherByUser",method=RequestMethod.POST)
+	@RequestMapping(value="/addCityForUser",method=RequestMethod.POST)
 	public WeatherData addCityForUser(HttpServletRequest request,UserCity userCity) throws ParseException {
 		User user = userService.getCurrentLoggedInUser(request);
 		return userService.addCityForUser(user.getUserId(), userCity.getCityId());
 	}
-	
-	@RequestMapping("/logoutUser")
-    public void logout(HttpServletRequest request) {
-		System.out.println("Here comes");
-    }
 }
